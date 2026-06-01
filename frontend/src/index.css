@@ -14,6 +14,8 @@ body {
   background-color: #0B1120;
   color: #F8FAFC;
   -webkit-font-smoothing: antialiased;
+  /* Respect device safe areas when running as installed PWA */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 h1, h2, h3, h4 {

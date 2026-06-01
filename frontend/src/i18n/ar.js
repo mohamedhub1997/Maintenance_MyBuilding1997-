@@ -217,6 +217,11 @@ const ar = {
   "search.allAssignees": "كل المسؤولين",
   "search.clear": "مسح الفلاتر",
   "search.results": "{n} نتيجة",
+
+  // PWA
+  "pwa.install": "تثبيت كتطبيق",
+  "pwa.installIOS": "التثبيت على iPhone…",
+  "pwa.iosSteps": "اضغط على أيقونة المشاركة في أسفل Safari، ثم اختر «إضافة إلى الشاشة الرئيسية».",
 };
 
 export default ar;

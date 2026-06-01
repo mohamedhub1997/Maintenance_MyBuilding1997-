@@ -217,6 +217,11 @@ const en = {
   "search.allAssignees": "All assignees",
   "search.clear": "Clear filters",
   "search.results": "{n} result(s)",
+
+  // PWA
+  "pwa.install": "Install as app",
+  "pwa.installIOS": "Install on iPhone…",
+  "pwa.iosSteps": "Tap the Share icon at the bottom of Safari, then choose \"Add to Home Screen\".",
 };
 
 export default en;

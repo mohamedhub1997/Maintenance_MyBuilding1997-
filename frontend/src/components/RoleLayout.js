@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useT } from "../i18n";
 import LanguageToggle from "./LanguageToggle";
 import NotificationToggle from "./NotificationToggle";
+import InstallAppButton from "./InstallAppButton";
 import { Home, LogOut, Menu, X } from "lucide-react";
 
 export default function RoleLayout({ navItems, titleKey, roleLabelKey }) {
@@ -125,6 +126,7 @@ function SidebarContent({ navItems, title, roleLabel, user, doLogout, t, onNav }
       </nav>
       <LanguageToggle />
       <NotificationToggle />
+      <InstallAppButton />
       <div className="px-3 py-3 border-t border-slate-800">
         <div className="px-3 py-2 mb-1">
           <div className="text-xs text-slate-400">{t("common.signedInAs")}</div>
