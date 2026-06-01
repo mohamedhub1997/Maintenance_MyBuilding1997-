@@ -1,0 +1,96 @@
+{
+  "theme": "Dark",
+  "archetype": "4 (Swiss & High-Contrast - Dark Adaptation)",
+  "rationale": "The real estate maintenance dashboard requires a clean, authoritative, and trustworthy aesthetic. A minimal dark theme with mid-green accents reduces eye strain for maintenance staff and provides a premium 'control room' feel for the property owner. The green is reserved for active states, key CTAs, and success metrics.",
+  "typography": {
+    "headings": {
+      "font_family": "Cabinet Grotesk, sans-serif",
+      "weights": ["500", "700"],
+      "usage": "Used for all page titles, card headers, and major numbers. Tracking should be tight (-0.02em)."
+    },
+    "body": {
+      "font_family": "Manrope, sans-serif",
+      "weights": ["400", "500", "600"],
+      "usage": "Used for all forms, tables, ticket contents, and standard UI elements."
+    }
+  },
+  "colors": {
+    "background": {
+      "base": "#0B1120",
+      "description": "Deep slate/navy black for the main app background to provide depth without being pure black."
+    },
+    "surface": {
+      "primary": "#1E293B",
+      "secondary": "#334155",
+      "description": "Elevated panels and cards. Primary surface is for standard cards, secondary for hover states or nested elements."
+    },
+    "accent": {
+      "primary": "#10B981",
+      "hover": "#059669",
+      "muted": "rgba(16, 185, 129, 0.15)",
+      "description": "Mid-green. Used strictly for primary CTAs (e.g., 'New Ticket', 'Mark Resolved'), active navigation states, and success indicators."
+    },
+    "text": {
+      "primary": "#F8FAFC",
+      "secondary": "#94A3B8",
+      "description": "High contrast off-white for primary readability, muted slate for secondary metadata."
+    },
+    "borders": {
+      "default": "#334155",
+      "subtle": "rgba(255,255,255,0.05)"
+    }
+  },
+  "layout_and_spacing": {
+    "grid_system": "The 'Control Room' Grid (Mode B). Strict alignment, tight gaps (gap-4 or gap-6) for dashboards. Dense, data-heavy approach for the Admin view.",
+    "spacing_scale": "Use standard Tailwind spacing but generously pad containers (p-6 or p-8) that have borders.",
+    "cards": "Flat solid surfaces. 1px border (border-slate-800). Max 8px border-radius (rounded-lg). Do not use drop shadows in dark mode; rely on border contrast.",
+    "navigation": "Sticky sidebar for Desktop (Admin), bottom navigation or condensed hamburger menu for Mobile (Tenant/Maintenance)."
+  },
+  "component_rules": {
+    "buttons": "Flat design. Primary buttons use the mid-green accent with dark text (text-slate-950). Secondary buttons use transparent background with 1px border.",
+    "forms": "Use Shadcn Form components. Inputs should have bg-slate-900 with subtle borders. Focus states must ring with mid-green.",
+    "tables": "Admin tenant/unit views use Shadcn Table. No vertical borders. Generous row padding.",
+    "status_badges": "Open (Yellow/Amber: #F59E0B), In Progress (Blue: #3B82F6), Resolved (Green: #10B981). Badges use 15% opacity background with solid text color.",
+    "ticket_images": "Image gallery inside tickets must use rounded corners (rounded-md) and open in a full-screen modal/lightbox on click."
+  },
+  "media": {
+    "hero_backgrounds": [
+      {
+        "url": "https://static.prod-images.emergentagent.com/jobs/76e65b69-a92e-497a-bbcc-311e7788cd5a/images/4f874676a5d8be4f262becc9231326aabedfa0566ecb26e6105aacd4cbe69c93.png",
+        "category": "background",
+        "description": "Abstract dark minimal background with mid-green gradient. Use for the login screen background."
+      }
+    ],
+    "illustrations": [
+      {
+        "url": "https://static.prod-images.emergentagent.com/jobs/76e65b69-a92e-497a-bbcc-311e7788cd5a/images/0354c91e1470b956344cf4a6d9474c8633a74d0baa47264baa52cb3e9809b256.png",
+        "category": "empty_state",
+        "description": "Minimalist clipboard/wrench illustration for empty ticket lists."
+      }
+    ],
+    "placeholders": [
+      {
+        "url": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjBhcGFydG1lbnQlMjBidWlsZGluZyUyMGV4dGVyaW9yfGVufDB8fHx8MTc3OTg0NDA4M3ww&ixlib=rb-4.1.0&q=85",
+        "category": "property",
+        "description": "Modern apartment building exterior. Use for Unit or Property placeholders."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1542013936693-884638332954?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwxfHxwbHVtYmVyJTIwZml4aW5nJTIwc2lua3xlbnwwfHx8fDE3Nzk4NDQwODN8MA&ixlib=rb-4.1.0&q=85",
+        "category": "ticket_photo",
+        "description": "Plumber fixing sink. Use as dummy data for tenant ticket photo uploads."
+      }
+    ]
+  },
+  "testing": {
+    "attributes": "All interactive elements (buttons, links, form inputs, tabs, ticket cards) MUST include a 'data-testid' attribute using kebab-case role-based naming (e.g., data-testid='submit-ticket-button')."
+  },
+  "instructions_to_main_agent": [
+    "Install and configure Tailwind for dark mode by default.",
+    "Add 'Cabinet Grotesk' and 'Manrope' fonts via Google Fonts or Fontshare.",
+    "Install Phosphor Icons or Lucide-react for sharp, clean iconography.",
+    "Ensure the login page uses the provided abstract green background.",
+    "Admin dashboard needs pure CRUD tables for users and units.",
+    "Ticket views must have a distinct split between the issue details/photos and the comment thread.",
+    "Remember to apply 'data-testid' to all buttons, links, and forms."
+  ]
+}

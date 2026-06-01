@@ -1,0 +1,33 @@
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+.yarn/
+.pnp.*
+build/
+dist/
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.log
+
+# Test artifacts
+test_reports/pytest/
+/tmp/
+*.env
+credentials.json
+*.pem
+*.key
+.credentials
