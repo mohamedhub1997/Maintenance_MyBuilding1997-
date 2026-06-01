@@ -46,27 +46,15 @@ app = FastAPI(title="Apartment Maintenance API")
 #   disable credentials (browsers reject wildcard + credentials).
 # - When explicit origins are listed, we enable credentials and only those origins
 #   can use them.
-_use_wildcard = "*" in CORS_ORIGINS
-if _use_wildcard:
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origin_regex=".*",
-        allow_credentials=False,
-        allow_methods=["*"],
-        allow_headers=["*"],
-        expose_headers=["*"],
-        max_age=600,
-    )
-else:
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=CORS_ORIGINS,
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-        expose_headers=["*"],
-        max_age=600,
-    )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=600,
+)
 
 COOKIE_NAME = "access_token"
 
