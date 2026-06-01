@@ -24,9 +24,22 @@ export function setToken(token) {
   }
 }
 
+// Cross-origin (e.g. Vercel → preview backend) we must NOT use credentials because
+// some CDNs in front of the backend return `Access-Control-Allow-Origin: *` for
+// OPTIONS preflights, which browsers reject with credentials. Bearer token in
+// localStorage is the primary auth path — cookies are not needed.
+// Auto-enable credentials only when calling the SAME origin (e.g. local dev).
+const SAME_ORIGIN = (() => {
+  try {
+    return new URL(BACKEND_URL).origin === window.location.origin;
+  } catch {
+    return false;
+  }
+})();
+
 const api = axios.create({
   baseURL: `${BACKEND_URL}/api`,
-  withCredentials: true, // also send the httpOnly cookie when available
+  withCredentials: SAME_ORIGIN,
 });
 
 // Attach Bearer token from localStorage on every request (race-proof, no cookie timing issues).

@@ -27,6 +27,7 @@ VAPID_PUBLIC_KEY = os.environ.get("VAPID_PUBLIC_KEY", "")
 VAPID_PRIVATE_PEM = os.environ.get("VAPID_PRIVATE_PEM", "")
 VAPID_CONTACT_EMAIL = os.environ.get("VAPID_CONTACT_EMAIL", "admin@example.com")
 SLA_HOURS = int(os.environ.get("SLA_HOURS", "72"))
+CORS_ORIGINS = [o.strip() for o in os.environ.get("CORS_ORIGINS", "*").split(",") if o.strip()]
 JWT_ALG = "HS256"
 ACCESS_TOKEN_MINUTES = 60 * 24 * 7  # 7 days
 
@@ -40,15 +41,41 @@ db = client[DB_NAME]
 # --- App ---
 app = FastAPI(title="Apartment Maintenance API")
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origin_regex=".*",
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# CORS configuration
+# - When CORS_ORIGINS includes "*", we use a regex that matches everything and
+#   disable credentials (browsers reject wildcard + credentials).
+# - When explicit origins are listed, we enable credentials and only those origins
+#   can use them.
+_use_wildcard = "*" in CORS_ORIGINS
+if _use_wildcard:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origin_regex=".*",
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
+        expose_headers=["*"],
+        max_age=600,
+    )
+else:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=CORS_ORIGINS,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+        expose_headers=["*"],
+        max_age=600,
+    )
 
 COOKIE_NAME = "access_token"
+
+# Catch-all OPTIONS handler — guarantees preflight requests always get 200
+# instead of 405, even if some path doesn't have its own OPTIONS handler.
+# The CORS middleware will then attach the proper Access-Control-* headers.
+@app.options("/{rest_of_path:path}")
+async def options_catchall(rest_of_path: str):
+    return Response(status_code=200)
 
 def set_auth_cookie(response: Response, token: str) -> None:
     response.set_cookie(
