@@ -46,21 +46,40 @@ app = FastAPI(title="Apartment Maintenance API")
 #   disable credentials (browsers reject wildcard + credentials).
 # - When explicit origins are listed, we enable credentials and only those origins
 #   can use them.
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-    expose_headers=["*"],
-    max_age=600,
-)
+# CORS configuration
+# Read from env; fallback to "*" for local dev only
+
+CORS_ORIGINS = [o.strip() for o in os.environ.get("CORS_ORIGINS", "*").split(",") if o.strip()]
+
+if CORS_ORIGINS and "*" not in CORS_ORIGINS:
+    # Production: specific origins → MUST enable credentials
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=CORS_ORIGINS,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+        expose_headers=["*"],
+        max_age=600,
+    )
+else:
+    # Local dev: wildcard → NO credentials (browser rule)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
+        expose_headers=["*"],
+        max_age=600,
+    )
 
 COOKIE_NAME = "access_token"
 
 # Catch-all OPTIONS handler — guarantees preflight requests always get 200
 # instead of 405, even if some path doesn't have its own OPTIONS handler.
 # The CORS middleware will then attach the proper Access-Control-* headers.
+
 @app.options("/{rest_of_path:path}")
 async def options_catchall(rest_of_path: str):
     return Response(status_code=200)
