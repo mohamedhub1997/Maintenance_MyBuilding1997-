@@ -49,10 +49,10 @@ app = FastAPI(title="Apartment Maintenance API")
 # CORS configuration
 # Read from env; fallback to "*" for local dev only
 
+# CORS: use env var in production, wildcard for local dev
 CORS_ORIGINS = [o.strip() for o in os.environ.get("CORS_ORIGINS", "*").split(",") if o.strip()]
 
 if CORS_ORIGINS and "*" not in CORS_ORIGINS:
-    # Production: specific origins → MUST enable credentials
     app.add_middleware(
         CORSMiddleware,
         allow_origins=CORS_ORIGINS,
@@ -63,7 +63,6 @@ if CORS_ORIGINS and "*" not in CORS_ORIGINS:
         max_age=600,
     )
 else:
-    # Local dev: wildcard → NO credentials (browser rule)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
@@ -73,7 +72,7 @@ else:
         expose_headers=["*"],
         max_age=600,
     )
-
+    
 COOKIE_NAME = "access_token"
 
 # Catch-all OPTIONS handler — guarantees preflight requests always get 200
