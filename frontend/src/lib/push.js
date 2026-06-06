@@ -47,7 +47,6 @@ export async function subscribeForPush() {
   }
   const { data } = await api.get("/notifications/vapid-key");
   if (!data?.key) throw new Error("Server is missing VAPID key");
-  /*fix: change const to let in push subscription*/
   let sub = await reg.pushManager.getSubscription();
   if (!sub) {
     sub = await reg.pushManager.subscribe({
@@ -77,4 +76,5 @@ export async function unsubscribeFromPush() {
   }
   await sub.unsubscribe();
 }
+/*fix push notification bug*/
 
